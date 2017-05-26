@@ -1,5 +1,15 @@
 'use strict';
-angular.module('lodashGithubApp').service('githubGraphQL', ['$http', function ($http) {
+
+/**
+ * @ngdoc function
+ * @name lodashGithubApp.graphqlFileLoader
+ * @description
+ * # Github Graphql Service
+ * This service is the interface between our app and the Github v4 graphql API.
+ *    app/queries/[graphql-filename]
+ */
+angular.module('lodashGithubApp').service('githubGraphQL', ['$http', 'graphqlFileLoader',
+  function ($http, graphqlFileLoader) {
 
   function tokenizedHeader() {
     // return 'Authorization: bearer' + process.env.Authorization;
@@ -27,39 +37,17 @@ angular.module('lodashGithubApp').service('githubGraphQL', ['$http', function ($
     },
 
     lodashQuery: function () {
-      var request = {
-        method: 'POST',
-        url: svc.graphqlUrl,
-        headers: tokenizedHeader(),
-        data: {
-          query: "query {\
-  organization(login: \"lodash\") {\
-    name,\
-    repositories(first: 10) {\
-      edges {\
-        node {\
-          pullRequests(first: 10) {\
-            edges {\
-              node {\
-                state:merged\
-                author {\
-                  avatarUrl\
-                  login\
-                  resourcePath\
-                  url\
-                }\
-              }\
-            }\
-          }\
-        }\
-      }\
-    }\
-  }\
-}"
-        }
-      };
-
-      return $http(request);
+      return graphqlFileLoader.loadFile('lodash.graphql').then(function (query) {
+        var request = {
+          method: 'POST',
+          url: svc.graphqlUrl,
+          headers: tokenizedHeader(),
+          data: {
+            query: query
+          }
+        };
+        return $http(request);
+      });
     }
   };
 

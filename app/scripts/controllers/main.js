@@ -8,7 +8,8 @@
  * Controller of the lodashGithubApp
  */
 angular.module('lodashGithubApp')
-  .controller('MainCtrl', ['githubGraphQL', function (githubGraphQL) {
+  .controller('MainCtrl', ['githubGraphQL',
+    function (githubGraphQL) {
     this.awesomeThings = [
       'HTML5 Boilerplate',
       'AngularJS',
@@ -18,5 +19,9 @@ angular.module('lodashGithubApp')
     githubGraphQL.lodashQuery().then(function (response) {
       console.log(response.data);
     });
+
+    // graphqlFileLoader.loadFile('lodash.graphql').then(function (response) {
+    //   console.log(response.data);
+    // });
 
   }]);

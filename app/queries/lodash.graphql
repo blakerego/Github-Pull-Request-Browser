@@ -4,6 +4,7 @@ query {
     repositories(first: 10) {
       edges {
         node {
+          name
           pullRequests(first: 10) {
             edges {
               node {
