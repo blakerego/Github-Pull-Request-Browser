@@ -8,13 +8,12 @@
  * This service is the interface between our app and the Github v4 graphql API.
  *    app/queries/[graphql-filename]
  */
-angular.module('lodashGithubApp').service('githubGraphQL', ['$http', 'graphqlFileLoader',
-  function ($http, graphqlFileLoader) {
+angular.module('lodashGithubApp').service('githubGraphQL', ['$http', 'graphqlFileLoader', 'GITHUB_ACCESS_TOKEN',
+  function ($http, graphqlFileLoader, GITHUB_ACCESS_TOKEN) {
 
   function tokenizedHeader() {
-    // return 'Authorization: bearer' + process.env.Authorization;
     return {
-      'Authorization': 'bearer ' + 'ADD GITHUB TOKEN HERE'
+      'Authorization': 'bearer ' + GITHUB_ACCESS_TOKEN
     };
   }
 
@@ -37,7 +36,7 @@ angular.module('lodashGithubApp').service('githubGraphQL', ['$http', 'graphqlFil
     },
 
     lodashQuery: function () {
-      return graphqlFileLoader.loadFile('lodash.graphql').then(function (query) {
+      return graphqlFileLoader.loadFile('lodash_prs_1.graphql').then(function (query) {
         var request = {
           method: 'POST',
           url: svc.graphqlUrl,

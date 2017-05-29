@@ -1,18 +1,18 @@
 query {
   organization(login: "lodash") {
-    name,
+    name
     repositories(first: 10) {
       edges {
         node {
-          name
-          pullRequests(first: 10) {
+          pullRequests(first:50,states:MERGED) {
             edges {
               node {
-                state:merged
+                mergedAt
+                title
+                url
                 author {
                   avatarUrl
                   login
-                  resourcePath
                   url
                 }
               }

@@ -9,7 +9,7 @@
     - Ensure the following scopes are added:
         - all 'repo' scopes are granted. 
         - ['read:org'], under admin:org
-    - Once you generate the access token, store in an environment variable named `GITHUB_ACCESS_TOKEN`
+    - Once you generate the access token, open javascript file services/environment-vars.js, and properly set `GITHUB_ACCESS_TOKEN`.
 
 ## Testing
 

@@ -38,9 +38,9 @@
           <div class="collapse navbar-collapse" id="js-navbar-collapse">
 
             <ul class="nav navbar-nav">
-              <li class="active"><a href="#/">Home</a></li>
-              <li><a ng-href="#/about">About</a></li>
-              <li><a ng-href="#/">Contact</a></li>
+              <li class="active"><a href="#!/">Home</a></li>
+              <li><a ng-href="#!/about">Last Week's PRs</a></li>
+              <li><a ng-href="#!/">Contact</a></li>
             </ul>
           </div>
         </div>
@@ -85,6 +85,7 @@
 
         <!-- build:js({.tmp,app}) scripts/scripts.js -->
         <script src="scripts/app.js"></script>
+        <script src="scripts/services/environment-vars.js"></script>
         <script src="scripts/services/graphql-file-loader.js"></script>
         <script src="scripts/services/github-graphql.js"></script>
         <script src="scripts/controllers/main.js"></script>
