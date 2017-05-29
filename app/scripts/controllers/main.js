@@ -16,12 +16,11 @@ angular.module('lodashGithubApp')
       'Karma'
     ];
 
-    githubGraphQL.lodashQuery().then(function (response) {
-      console.log(response.data);
-    });
 
-    // graphqlFileLoader.loadFile('lodash.graphql').then(function (response) {
-    //   console.log(response.data);
-    // });
+    var dt = moment('12/30/2017', 'MM/DD/YYYY').week();
+    console.log(dt);
+    githubGraphQL.getLodashPullRequests().then(function (pullRequests) {
+      console.log(pullRequests);
+    });
 
   }]);

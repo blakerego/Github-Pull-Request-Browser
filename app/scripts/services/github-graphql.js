@@ -2,14 +2,14 @@
 
 /**
  * @ngdoc function
- * @name lodashGithubApp.graphqlFileLoader
+ * @name lodashGithubApp.githubGraphQL
  * @description
  * # Github Graphql Service
  * This service is the interface between our app and the Github v4 graphql API.
  *    app/queries/[graphql-filename]
  */
-angular.module('lodashGithubApp').service('githubGraphQL', ['$http', 'graphqlFileLoader', 'GITHUB_ACCESS_TOKEN',
-  function ($http, graphqlFileLoader, GITHUB_ACCESS_TOKEN) {
+angular.module('lodashGithubApp').service('githubGraphQL', ['$http', 'graphqlFileLoader', 'GITHUB_ACCESS_TOKEN', 'pullRequestDecorator',
+  function ($http, graphqlFileLoader, GITHUB_ACCESS_TOKEN, pullRequestDecorator) {
 
   function tokenizedHeader() {
     return {
@@ -35,7 +35,14 @@ angular.module('lodashGithubApp').service('githubGraphQL', ['$http', 'graphqlFil
       });
     },
 
-    lodashQuery: function () {
+  /**
+   * @ngdoc function
+   * @name lodashGithubApp.githubGraphQL.getLodashPullRequests
+   * @description
+   * This function makes a POST request to the Github graphql library, and returns
+   * a flat array of decorated pull request objects.
+   */
+    getLodashPullRequests: function () {
       return graphqlFileLoader.loadFile('lodash_prs_1.graphql').then(function (query) {
         var request = {
           method: 'POST',
@@ -45,7 +52,15 @@ angular.module('lodashGithubApp').service('githubGraphQL', ['$http', 'graphqlFil
             query: query
           }
         };
-        return $http(request);
+        return $http(request).then(function (response) {
+          var pullRequests = [];
+          _.each(response.data.data.organization.repositories.edges, function(repo) {
+            _.each(repo.node.pullRequests.edges, function (rawPullRequest) {
+              pullRequests.push(pullRequestDecorator.decorate(rawPullRequest));
+            });
+          });
+          return pullRequests;
+        });
       });
     }
   };

@@ -508,9 +508,9 @@ module.exports = function (grunt) {
   ]);
 
   grunt.registerTask('default', [
+    'test',
     'newer:jshint',
     'newer:jscs',
-    'test',
     'build'
   ]);
 };

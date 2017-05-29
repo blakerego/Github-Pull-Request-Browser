@@ -10,6 +10,11 @@ query {
                 mergedAt
                 title
                 url
+                baseRefName
+                headRefName
+                repository {
+                  name
+                }
                 author {
                   avatarUrl
                   login

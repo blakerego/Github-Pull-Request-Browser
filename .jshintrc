@@ -11,7 +11,13 @@
   "undef": true,
   "unused": true,
   "globals": {
-    "angular": false
+    "angular": false,
+    "moment": false,
+    "_": false,
+    "it": false,
+    "describe": false,
+    "module": false,
+    "expect": false
   },
   "multistr": true
 }
