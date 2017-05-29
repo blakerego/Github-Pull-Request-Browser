@@ -15,6 +15,8 @@ angular.module('lodashGithubApp').service('pullRequestDecorator', [
     decorate: function (rawPullRequest) {
       var parsed = rawPullRequest.node;
       parsed.weekMarker = svc.weekMarkerFromDate(parsed.mergedAt);
+      parsed.authorLogin = parsed.author.login;
+      parsed.repoName = parsed.repository.name;
       return parsed;
     },
 

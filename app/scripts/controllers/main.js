@@ -1,5 +1,6 @@
 'use strict';
 
+angular.module('lodashGithubApp')
 /**
  * @ngdoc function
  * @name lodashGithubApp.controller:MainCtrl
@@ -7,20 +8,44 @@
  * # MainCtrl
  * Controller of the lodashGithubApp
  */
-angular.module('lodashGithubApp')
-  .controller('MainCtrl', ['githubGraphQL',
-    function (githubGraphQL) {
-    this.awesomeThings = [
-      'HTML5 Boilerplate',
-      'AngularJS',
-      'Karma'
-    ];
+.controller('MainCtrl', ['githubGraphQL', '$scope', function (githubGraphQL, $scope) {
 
+  githubGraphQL.getLodashPullRequests().then(function (pullRequests) {
+    
+    $scope.pullRequestGrid = {
+      data: pullRequests,
+      columnDefs: [
+      {
+        field: 'repoName',
+        displayName: 'Repository',
+        width: 200
+      },
+      {
+        field: 'weekMarker',
+        displayName: 'Year.Week Merged'
+      },
+      {
+        field: 'title',
+        displayName: 'Title'
+      },
+      {
+        field: 'headRefName',
+        displayName: 'From'
+      },
+      {
+        field: 'baseRefName',
+        displayName: 'To'
+      },
+      {
+        field: 'authorLogin',
+        displayName: 'Author'
+      },
+      {
+        field: 'mergedAt',
+        displayName: 'Merged At'
+      }
+      ]
+    };
+  });
 
-    var dt = moment('12/30/2017', 'MM/DD/YYYY').week();
-    console.log(dt);
-    githubGraphQL.getLodashPullRequests().then(function (pullRequests) {
-      console.log(pullRequests);
-    });
-
-  }]);
+}]);

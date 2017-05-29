@@ -13,9 +13,20 @@ describe('pullRequestDecorator Tests ----', function () {
     }));
 
     it('Should append the a week marker to the PR object', inject(function(pullRequestDecorator, pullRequestData1) {
-      var r2 = pullRequestDecorator.decorate(pullRequestData1).weekMarker;
+      var r2 = pullRequestDecorator.decorate(pullRequestData1);
       expect(r2.weekMarker).toBe('2012.17');
     }));
+
+    it('Should append author name to the PR object', inject(function(pullRequestDecorator, pullRequestData1) {
+      var r3 = pullRequestDecorator.decorate(pullRequestData1);
+      expect(r3.authorLogin).toBe('kitcambridge');
+    }));
+
+    it('Should append repository name to the PR object', inject(function(pullRequestDecorator, pullRequestData1) {
+      var r3 = pullRequestDecorator.decorate(pullRequestData1);
+      expect(r3.repoName).toBe('lodash');
+    }));
+
   });
 
   describe('getWeekMarker --', function () {
@@ -44,6 +55,9 @@ angular.module('mockAppData', []).constant('pullRequestData1', {
       'avatarUrl': 'https:\/\/avatars3.githubusercontent.com\/u\/243830?v=3',
       'login': 'kitcambridge',
       'url': 'https:\/\/github.com\/kitcambridge'
-    }
+    },
+    'repository': {
+      'name': 'lodash'
+    },
   }
 });

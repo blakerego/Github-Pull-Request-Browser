@@ -15,7 +15,9 @@ angular
     'ngResource',
     'ngRoute',
     'ngSanitize',
-    'ngTouch'
+    'ngTouch',
+    'ui.grid',
+    'ui.grid.grouping'
   ])
   .config(function ($routeProvider) {
     $routeProvider

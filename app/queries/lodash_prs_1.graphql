@@ -4,7 +4,7 @@ query {
     repositories(first: 10) {
       edges {
         node {
-          pullRequests(first:50,states:MERGED) {
+          pullRequests(last:50,states:MERGED) {
             edges {
               node {
                 mergedAt
