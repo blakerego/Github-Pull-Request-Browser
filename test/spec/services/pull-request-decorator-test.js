@@ -27,6 +27,10 @@ describe('pullRequestDecorator Tests ----', function () {
       expect(r3.repoName).toBe('lodash');
     }));
 
+    it('Should append commit count to the PR object', inject(function (pullRequestDecorator, pullRequestData1) {
+      var r4 = pullRequestDecorator.decorate(pullRequestData1);
+      expect(r4.commitCount).toBe(3);
+    }));
   });
 
   describe('getWeekMarker --', function () {
@@ -41,12 +45,26 @@ describe('pullRequestDecorator Tests ----', function () {
     }));
   });
 
+  describe('reviewDurationInHours', function () {
+    it('should return the difference between the merged and created timestamps, in hours', inject(function (pullRequestDecorator, pullRequestData1) {
+      var duration = pullRequestDecorator.reviewDurationInHours(pullRequestData1.node);
+      expect(duration < 1 && duration > 0).toBe(true);
+    }));
+
+    it('should append the duration to the object',  inject(function (pullRequestDecorator, pullRequestData1) {
+      var r4 = pullRequestDecorator.decorate(pullRequestData1);
+      console.log(r4.durationInHours);
+      expect(r4.durationInHours).not.toBe(undefined);
+    }));
+  });
 });
 
 
-angular.module('mockAppData', []).constant('pullRequestData1', {
+angular.module('mockAppData', [])
+.constant('pullRequestData1', {
   'node': {
     'mergedAt': '2012-04-23T03:34:50Z',
+    'createdAt': '2012-04-23T02:49:19Z',
     'title': 'Replace the `Makefile` with a JavaScript-based build system.',
     'url': 'https:\/\/github.com\/lodash\/lodash\/pull\/1',
     'baseRefName': 'master',
@@ -56,8 +74,13 @@ angular.module('mockAppData', []).constant('pullRequestData1', {
       'login': 'kitcambridge',
       'url': 'https:\/\/github.com\/kitcambridge'
     },
+    'commits': {
+      'totalCount': 3
+    },
     'repository': {
       'name': 'lodash'
     },
   }
-});
+})
+;
+

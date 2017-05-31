@@ -17,7 +17,8 @@ angular
     'ngSanitize',
     'ngTouch',
     'ui.grid',
-    'ui.grid.grouping'
+    'ui.grid.grouping',
+    'nvd3ChartDirectives'
   ])
   .config(function ($routeProvider) {
     $routeProvider

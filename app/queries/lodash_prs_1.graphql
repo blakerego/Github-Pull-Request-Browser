@@ -8,12 +8,16 @@ query {
             edges {
               node {
                 mergedAt
+                createdAt
                 title
                 url
                 baseRefName
                 headRefName
                 repository {
                   name
+                }
+                commits {
+                  totalCount
                 }
                 author {
                   avatarUrl

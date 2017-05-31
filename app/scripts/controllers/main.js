@@ -10,7 +10,7 @@ angular.module('lodashGithubApp')
  */
 .controller('MainCtrl', ['githubGraphQL', '$scope', function (githubGraphQL, $scope) {
 
-  githubGraphQL.getLodashPullRequests().then(function (pullRequests) {
+  githubGraphQL.getLodashPullRequests(false).then(function (pullRequests) {
     
     $scope.pullRequestGrid = {
       data: pullRequests,
@@ -24,10 +24,10 @@ angular.module('lodashGithubApp')
         field: 'weekMarker',
         displayName: 'Year.Week Merged'
       },
-      {
-        field: 'title',
-        displayName: 'Title'
-      },
+      // {
+      //   field: 'title',
+      //   displayName: 'Title'
+      // },
       {
         field: 'headRefName',
         displayName: 'From'
@@ -43,6 +43,10 @@ angular.module('lodashGithubApp')
       {
         field: 'mergedAt',
         displayName: 'Merged At'
+      },
+      {
+        field: 'durationInHours',
+        displayName: 'Duration (h)'
       }
       ]
     };

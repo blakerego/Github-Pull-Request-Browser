@@ -1,1 +1,14 @@
-<p>This is the about view.</p>
+<h1>Commit Count vs. PR Duration (hours)</h1>
+<div ng-if="exampleData && exampleData.length > 0">
+  <nvd3-scatter-chart
+      data="exampleData"
+      width="600"
+      height="350"
+      xAxisTickFormat="xAxisTickFormatFunction()"
+      yAxisTickFormat="yAxisTickFormatFunction()"
+      interactive="true"
+      tooltips="true"
+      showDistX="true">
+      <svg></svg>
+  </nvd3-scatter-chart>
+</div>

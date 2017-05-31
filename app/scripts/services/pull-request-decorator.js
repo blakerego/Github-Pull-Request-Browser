@@ -17,6 +17,8 @@ angular.module('lodashGithubApp').service('pullRequestDecorator', [
       parsed.weekMarker = svc.weekMarkerFromDate(parsed.mergedAt);
       parsed.authorLogin = parsed.author.login;
       parsed.repoName = parsed.repository.name;
+      parsed.durationInHours = svc.reviewDurationInHours(parsed);
+      parsed.commitCount = parsed.commits.totalCount;
       return parsed;
     },
 
@@ -28,6 +30,12 @@ angular.module('lodashGithubApp').service('pullRequestDecorator', [
     weekMarkerFromDate: function (date) {
       var momentDate = moment(date);
       return momentDate.year() + '.' + momentDate.week();
+    },
+
+    reviewDurationInHours: function (node) {
+      var mergedDate = moment(node.mergedAt);
+      var createdDate = moment(node.createdAt);
+      return mergedDate.diff(createdDate, 'hours', true);
     }
   };
 
