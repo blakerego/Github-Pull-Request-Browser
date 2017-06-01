@@ -1,7 +1,7 @@
 <h1>Commit Count vs. PR Duration (hours)</h1>
-<div ng-if="exampleData && exampleData.length > 0">
+<div ng-if="commitCountVsDuration && commitCountVsDuration.length > 0">
   <nvd3-scatter-chart
-      data="exampleData"
+      data="commitCountVsDuration"
       width="600"
       height="350"
       xAxisTickFormat="xAxisTickFormatFunction()"
@@ -12,3 +12,21 @@
       <svg></svg>
   </nvd3-scatter-chart>
 </div>
+<div ng-if="!commitCountVsDuration" class="loader"></div>
+
+
+<h1>Comment Count vs. PR Duration (hours)</h1>
+<div ng-if="commentCountVsDuration && commentCountVsDuration.length > 0">
+  <nvd3-scatter-chart
+      data="commentCountVsDuration"
+      width="600"
+      height="350"
+      xAxisTickFormat="xAxisTickFormatFunction()"
+      yAxisTickFormat="yAxisTickFormatFunction()"
+      interactive="true"
+      tooltips="true"
+      showDistX="true">
+      <svg></svg>
+  </nvd3-scatter-chart>
+</div>
+<div ng-if="!commentCountVsDuration" class="loader"></div>

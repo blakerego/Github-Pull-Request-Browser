@@ -2,14 +2,20 @@
 
 ## Build & development
 
+- `npm install`
+
+- `bower install`
+
+- `gem install compass`
+
 - Run `grunt` for building and `grunt serve` for preview.
 
-- To view Github data, you'll need an access token. 
+- Important! To view Github data, you'll need an access token. 
     - You can generate one by following the information [here](https://help.github.com/articles/creating-a-personal-access-token-for-the-command-line/).
     - Ensure the following scopes are added:
         - all 'repo' scopes are granted. 
         - ['read:org'], under admin:org
-    - Once you generate the access token, open javascript file services/environment-vars.js, and properly set `GITHUB_ACCESS_TOKEN`.
+    - Once you generate the access token, open javascript file `app/scripts/services/environment-vars.js`, and properly set the constant `GITHUB_ACCESS_TOKEN`.
 
 ## Resources
 

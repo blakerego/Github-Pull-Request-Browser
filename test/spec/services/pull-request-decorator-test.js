@@ -31,6 +31,11 @@ describe('pullRequestDecorator Tests ----', function () {
       var r4 = pullRequestDecorator.decorate(pullRequestData1);
       expect(r4.commitCount).toBe(3);
     }));
+
+    it('Should append comment count to the PR object', inject(function (pullRequestDecorator, pullRequestData1) {
+      var r5 = pullRequestDecorator.decorate(pullRequestData1);
+      expect(r5.commentCount).toBe(10);
+    }));
   });
 
   describe('getWeekMarker --', function () {
@@ -53,10 +58,10 @@ describe('pullRequestDecorator Tests ----', function () {
 
     it('should append the duration to the object',  inject(function (pullRequestDecorator, pullRequestData1) {
       var r4 = pullRequestDecorator.decorate(pullRequestData1);
-      console.log(r4.durationInHours);
       expect(r4.durationInHours).not.toBe(undefined);
     }));
   });
+
 });
 
 
@@ -80,6 +85,9 @@ angular.module('mockAppData', [])
     'repository': {
       'name': 'lodash'
     },
+    'comments': {
+      'totalCount': 10
+    }
   }
 })
 ;
