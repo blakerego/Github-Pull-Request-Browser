@@ -13,6 +13,29 @@ angular.module('lodashGithubApp')
   var lodashPullRequests;
   githubGraphQL.getLodashPullRequests(false).then(function (prs) {
     lodashPullRequests = prs;
+
+    var weeks = _.groupBy(lodashPullRequests, 'weekMarker');
+    var durationVsWeek = [];
+    _.each(weeks, function(prs, key) {
+      var arr = key.split('.');
+      var year = arr[0];
+      var week = arr[1];
+      var normalizedWeek = Math.floor((week / 51)*100);
+      var newKey = year + '.' + normalizedWeek;
+      durationVsWeek.push({
+        'x': newKey,
+        'y': _.meanBy(prs, 'durationInHours'),
+        'size': 3
+      });
+    });
+
+    $scope.durationVsWeek = [{
+      'key': 'Average Duration vs. Week',
+      'values': durationVsWeek
+    }];
+
+
+
     var commitCountValues = _.map(lodashPullRequests, function (pr) {
       return {
         'x': pr.commitCount,
