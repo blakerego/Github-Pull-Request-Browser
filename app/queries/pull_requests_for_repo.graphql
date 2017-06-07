@@ -1,0 +1,36 @@
+query {
+  organization(login: "lodash") {
+    name
+    repository(name:"<NAME_TOKEN>"){
+      pullRequests(last:"<N_MORE_TOKEN>",states:MERGED, after: "<PULL_REQUEST_CURSOR_TOKEN>") {
+        totalCount
+        edges {
+          cursor
+          node {
+            id
+            mergedAt
+            createdAt
+            title
+            url
+            baseRefName
+            headRefName
+            commits {
+              totalCount
+            }
+            repository {
+              name
+            }
+            author {
+              avatarUrl
+              login
+              url
+            }
+            comments {
+              totalCount
+            }
+          }
+        }
+      }
+    }
+  }
+}

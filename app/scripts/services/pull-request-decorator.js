@@ -19,7 +19,7 @@ angular.module('lodashGithubApp').service('pullRequestDecorator', [
       parsed.repoName = parsed.repository.name;
       parsed.durationInHours = svc.reviewDurationInHours(parsed);
       parsed.commitCount = parsed.commits.totalCount;
-      parsed.commentCount = parsed.comments.totalCount;
+      parsed.commentCount = parsed.comments == null ? 0 : parsed.comments.totalCount;
       return parsed;
     },
 
