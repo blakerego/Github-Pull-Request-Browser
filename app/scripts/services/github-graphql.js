@@ -82,8 +82,16 @@ angular.module('lodashGithubApp').service('githubGraphQL', ['$http', 'graphqlFil
     checkForAdditionalPrs: function (repo, pullRequestEdges) {
       var repoName = pullRequestEdges[0].node.repository.name;
       var resultsSoFar = _.filter(svc.lodashPullRequests, function (pr) { return pr.repoName === repoName; });
-      var totalResultCount = repo.node.pullRequests.totalCount;
-      if (resultsSoFar.length < repo.node.pullRequests.totalCount) {
+      var totalResultCount;
+      var node; 
+      if (repo.node) {
+        node = repo.node;
+      } else {
+        node = repo;
+      }
+      totalResultCount = node.pullRequests.totalCount;
+       
+      if (resultsSoFar.length < node.pullRequests.totalCount) {
         var edgesCount = pullRequestEdges.length;
         var cursor = pullRequestEdges[edgesCount - 1].cursor;
         svc.getMorePullRequestsForRepository(repoName, totalResultCount - resultsSoFar.length, cursor);

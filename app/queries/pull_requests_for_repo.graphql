@@ -2,7 +2,7 @@ query {
   organization(login: "lodash") {
     name
     repository(name:"<NAME_TOKEN>"){
-      pullRequests(last:"<N_MORE_TOKEN>",states:MERGED, after: "<PULL_REQUEST_CURSOR_TOKEN>") {
+      pullRequests(last:"<N_MORE_TOKEN>",states:MERGED, before: "<PULL_REQUEST_CURSOR_TOKEN>") {
         totalCount
         edges {
           cursor
