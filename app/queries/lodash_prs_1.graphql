@@ -4,8 +4,11 @@ query {
     repositories(first: 10) {
       edges {
         node {
-          pullRequests(last:50,states:MERGED) {
+          name
+          pullRequests(last:100,states:MERGED) {
+            totalCount
             edges {
+              cursor
               node {
                 mergedAt
                 createdAt

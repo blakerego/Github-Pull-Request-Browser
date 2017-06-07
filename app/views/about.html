@@ -1,3 +1,20 @@
+<h1>Duration vs. Week</h1>
+<div ng-if="durationVsWeek && durationVsWeek.length > 0">
+  <nvd3-scatter-chart
+      data="durationVsWeek"
+      width="600"
+      height="350"
+      xAxisTickFormat="xAxisTickFormatFunction()"
+      yAxisTickFormat="yAxisTickFormatFunction()"
+      interactive="true"
+      tooltips="true"
+      showDistX="true">
+      <svg></svg>
+  </nvd3-scatter-chart>
+</div>
+<div ng-if="!durationVsWeek" class="loader"></div>
+
+
 <h1>Commit Count vs. PR Duration (hours)</h1>
 <div ng-if="commitCountVsDuration && commitCountVsDuration.length > 0">
   <nvd3-scatter-chart

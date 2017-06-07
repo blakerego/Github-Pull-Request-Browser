@@ -30,7 +30,11 @@ angular.module('lodashGithubApp').service('pullRequestDecorator', [
     ///      Output: '2012.17'
     weekMarkerFromDate: function (date) {
       var momentDate = moment(date);
-      return momentDate.year() + '.' + momentDate.week();
+      var week = momentDate.week();
+      if (String(momentDate.week()).length === 1) {
+        week = '0' + momentDate.week();
+      }
+      return momentDate.year() + '.' + week;
     },
 
     /// Output will be a number representing the number of hours

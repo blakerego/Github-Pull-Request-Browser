@@ -55,14 +55,16 @@ angular.module('lodashGithubApp').service('githubGraphQL', ['$http', 'graphqlFil
           }
         };
         return $http(request).then(function (response) {
-          var pullRequests = [];
+          svc.lodashPullRequests = [];
           _.each(response.data.data.organization.repositories.edges, function(repo) {
             _.each(repo.node.pullRequests.edges, function (rawPullRequest) {
-              pullRequests.push(pullRequestDecorator.decorate(rawPullRequest));
+              svc.lodashPullRequests.push(pullRequestDecorator.decorate(rawPullRequest));
             });
+
+            svc.checkForAdditionalPrs(repo, repo.node.pullRequests.edges);
           });
-          svc.lodashPullRequests = pullRequests;
-          return pullRequests;
+          
+          return svc.lodashPullRequests;
         });
       });
     },
@@ -75,6 +77,50 @@ angular.module('lodashGithubApp').service('githubGraphQL', ['$http', 'graphqlFil
         deferred.resolve(svc.lodashPullRequests);
         return deferred.promise;
       }
+    },
+
+    checkForAdditionalPrs: function (repo, pullRequestEdges) {
+      var repoName = pullRequestEdges[0].node.repository.name;
+      var resultsSoFar = _.filter(svc.lodashPullRequests, function (pr) { return pr.repoName === repoName; });
+      var totalResultCount;
+      var node; 
+      if (repo.node) {
+        node = repo.node;
+      } else {
+        node = repo;
+      }
+      totalResultCount = node.pullRequests.totalCount;
+       
+      if (resultsSoFar.length < node.pullRequests.totalCount) {
+        var edgesCount = pullRequestEdges.length;
+        var cursor = pullRequestEdges[edgesCount - 1].cursor;
+        svc.getMorePullRequestsForRepository(repoName, totalResultCount - resultsSoFar.length, cursor);
+      }
+    },
+
+    getMorePullRequestsForRepository: function (repoName, nAdditional, lastCursor) {
+      var nCapped = nAdditional;
+      if (nAdditional > 100) {
+        nCapped = 100;
+      }
+      return graphqlFileLoader.loadFile('pull_requests_for_repo.graphql').then(function (rawTextQuery) {
+        var query = rawTextQuery.replace('<NAME_TOKEN>', repoName).replace('"<N_MORE_TOKEN>"', nCapped).replace('<PULL_REQUEST_CURSOR_TOKEN>', lastCursor);
+        var request = {
+          method: 'POST',
+          url: svc.graphqlUrl,
+          headers: tokenizedHeader(),
+          data: {
+            query: query
+          }
+        };
+        return $http(request).then(function (response) {
+          _.each(response.data.data.organization.repository.pullRequests.edges, function (rawPullRequest) {
+            svc.lodashPullRequests.push(pullRequestDecorator.decorate(rawPullRequest));
+          });
+          svc.checkForAdditionalPrs(response.data.data.organization.repository, response.data.data.organization.repository.pullRequests.edges);
+          return svc.lodashPullRequests;
+        });
+      });
     }
   };
 
